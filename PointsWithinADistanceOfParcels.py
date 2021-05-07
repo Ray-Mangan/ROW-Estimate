@@ -1,0 +1,25 @@
+def getcount(lyr):
+	d = arcpy.Describe(lyr)
+	selectedFeatures = d.FIDset.split(";")
+	return len(selectedFeatures)
+
+inPnts = arcpy.GetParameterAsText(0)
+inParcels = arcpy.GetParameterAsText(1)
+
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "200 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_200 = getcount(inPnts)
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "100 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_100 = getcount(inPnts)
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "80 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_80 = getcount(inPnts)
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "60 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_60 = getcount(inPnts)
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "40 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_40 = getcount(inPnts)
+arcpy.management.SelectLayerByLocation(inPnts, "WITHIN_A_DISTANCE", inParcels, "20 Feet", "NEW_SELECTION", "NOT_INVERT")
+ft_20 = getcount(inPnts)
+
+cnts = str("{},{},{},{},{},{}".format(ft_20,ft_40,ft_60,ft_80,ft_100,ft_200))
+arcpy.SetParameterAsText(2,cnts)
+arcpy.AddMessage("20ft, 40ft, 60ft, 80ft, 100ft, 200ft")
+arcpy.AddMessage(cnts)
