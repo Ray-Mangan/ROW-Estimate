@@ -73,11 +73,8 @@ disLyr = result.getOutput(0)
 getMsgs("Dissolved {} into {}".format(in_dissolveParcels,disLyr))
 errors = []
 for row in arcpy.da.SearchCursor(disLyr, ["SHAPE@"]):
-    try:
-        dissolved.append(row[0])
-    except:
-        e=sys.exc_info()[1]
-        errors.append(e)
+    dissolved.append(row[0])
+
 
 arcpy.AddMessage("Number of items in {} = {}".format(disLyr,len(dissolved)))
 
