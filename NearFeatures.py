@@ -4,6 +4,11 @@
 # 3. Runs Near points to parcels - creates near distance, oid, x and y in points
 # Purpose - Creates a "near" segment between an RCL and a parcel. From this we can measure distance between parcels to estimate ROW
 # Set all parameter types to Feature Layer
+#
+#
+# Devin Adding this 
+#
+
 
 def getMsgs(startMsg):
     msgCnt = arcpy.GetMessageCount()
