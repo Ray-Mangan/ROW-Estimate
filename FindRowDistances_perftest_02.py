@@ -71,9 +71,13 @@ t1a_start = perf_counter()
 result = arcpy.management.Dissolve(in_dissolveParcels,"in_memory\\{}_dissolvedPars".format(nameSuffix))
 disLyr = result.getOutput(0)
 getMsgs("Dissolved {} into {}".format(in_dissolveParcels,disLyr))
-
+errors = []
 for row in arcpy.da.SearchCursor(disLyr, ["SHAPE@"]):
-    dissolved.append(row[0])
+    try:
+        dissolved.append(row[0])
+    except:
+        e=sys.exc_info()[1]
+        errors.append(e)
 
 arcpy.AddMessage("Number of items in {} = {}".format(disLyr,len(dissolved)))
 
