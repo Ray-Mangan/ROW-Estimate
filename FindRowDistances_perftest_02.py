@@ -47,13 +47,16 @@ spaRef.loadFromString(hawaii3)
 t1_start = perf_counter()
 with arcpy.da.SearchCursor(in_distanceRowPnts, fields) as cursor:
     for row in cursor:
-        # 2. Create an arcpy.point from the XY created by NEAR, then create a PointGeometry
-        nearParcelPoint = arcpy.Point(row[1],row[2])
-        nearParcelPointGeom = arcpy.PointGeometry(nearParcelPoint,spaRef)
+        try: 
+            # 2. Create an arcpy.point from the XY created by NEAR, then create a PointGeometry
+            nearParcelPoint = arcpy.Point(row[1],row[2])
+            nearParcelPointGeom = arcpy.PointGeometry(nearParcelPoint,spaRef)
 
-        # 3. Get angle and distance between the ROW point and PointGeometry & store in list
-        angleDist = row[0].angleAndDistanceTo(nearParcelPointGeom,"PLANAR")
-        nearParcelPoints.append([row[0],nearParcelPointGeom,angleDist[0],angleDist[1],row[3],row[4],row[5],row[6]])
+            # 3. Get angle and distance between the ROW point and PointGeometry & store in list
+            angleDist = row[0].angleAndDistanceTo(nearParcelPointGeom,"PLANAR")
+            nearParcelPoints.append([row[0],nearParcelPointGeom,angleDist[0],angleDist[1],row[3],row[4],row[5],row[6]])
+        except:
+            e1=sys.exc_info()[1]
 
 t1_stop = perf_counter()
 arcpy.AddMessage("{} query + fetch time: {}".format(in_distanceRowPnts,t1_stop-t1_start))
