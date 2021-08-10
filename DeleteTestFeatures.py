@@ -1,4 +1,5 @@
 in_features = arcpy.GetParameter(0)
+arcpy.AddMessage("Deleting things...")
 for f in in_features:
     try:
         desc = arcpy.Describe(f)
